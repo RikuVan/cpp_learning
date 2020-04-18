@@ -46,7 +46,7 @@ ChatBot::~ChatBot()
 
 ChatBot::ChatBot(const ChatBot &other) // copy constructor
 {
-    _image = other._image;
+    _image = new wxBitmap(*other._image);
 
     other._chatLogic->SetChatbotHandle(this);
     _chatLogic = other._chatLogic;
@@ -79,8 +79,7 @@ ChatBot &ChatBot::operator=(const ChatBot &other) // copy assignment operator
 {
     std::cout << "COPY ASSIGNMENT: ASSIGNING content of instance " << &other << " to instance " << this << std::endl;
     if (this != &other) {
-        // deleting causes an warning
-        // delete _image;
+         delete[] _image;
         _image = new wxBitmap(*other._image);
 
         other._chatLogic->SetChatbotHandle(this);
@@ -95,8 +94,7 @@ ChatBot &ChatBot::operator=(ChatBot &&other) // move assignment operator
 {
     std::cout << "MOVE ASSIGNMENT: MOVING (assign) instance " << &other << " to instance " << this << std::endl;
     if (this != &other) {
-    // deleting causes an warning
-    // delete _image;
+    delete[] _image;
     _image = new wxBitmap(*other._image);
 
     other._chatLogic->SetChatbotHandle(this);
